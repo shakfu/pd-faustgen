@@ -945,12 +945,14 @@ static void faustgen_tilde_midichan(t_faustgen_tilde *x, t_symbol* s, int argc, 
         pd_error(x, "faustgen2~: bad midi channel number '%s'", buf);
       }
     }
-    if (x->f_midichanmsk != oldmsk)
+    if (x->f_midichanmsk != oldmsk) {
       // prevent hanging notes after change
-      if (x->f_dsps)
+      if (x->f_dsps) {
         voices_all_notes_off(x);
-      else
+      } else {
         faust_ui_manager_all_notes_off(x->f_ui_manager);
+      }      
+    }
   }
 }
 
