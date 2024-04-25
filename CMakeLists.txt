@@ -15,11 +15,6 @@ set(PROJECT_NAME faustgen2_tilde)
 
 message(STATUS "FAUST_DIR: ${FAUST_DIR}")
 
-# include_directories(
-#     ${FAUST_DIR}/architecture
-#     ${FAUST_DIR}/compiler
-#     ${FAUST_DIR}/compiler/utils
-# )
 
 ## On Linux "force" the link with stdc++
 if(UNIX AND NOT APPLE)
@@ -55,7 +50,6 @@ target_include_directories(${PROJECT_NAME}
     ${FAUST_DIR}/architecture
     ${FAUST_DIR}/compiler
     ${FAUST_DIR}/compiler/utils
-    # ${THIRDPARTY}/pure-data/src
     ${THIRDPARTY}/install/include
 )
 

@@ -1,4 +1,3 @@
-# install dependencies to build the WarpBuf chugin
 
 CWD=`pwd`
 THIRDPARTY=${CWD}/build/thirdparty
@@ -58,35 +57,6 @@ function install_libfaust() {
 	fi
 }
 
-function install_libflac() {
-	SRC=${THIRDPARTY}/libflac
-	BUILD=${THIRDPARTY}/libflac/build
-	if [ ! -f ${THIRDPARTY}/install/lib/libFLAC.a ]; then
-		rm -rf ${THIRDPARTY}/libflac && \
-		mkdir -p build/thirdparty && \
-		git clone --depth=1 https://github.com/xiph/flac.git ${THIRDPARTY}/libflac && \
-		mkdir -p ${BUILD} && \
-		cd ${BUILD} && \
-		cmake .. \
-			-DCMAKE_VERBOSE_MAKEFILE=ON \
-			-DCMAKE_C_FLAGS="-fPIC" \
-			-DCMAKE_CXX_FLAGS="-fPIC" \
-			-DBUILD_PROGRAMS=OFF \
-			-DBUILD_EXAMPLES=OFF \
-			-DBUILD_TESTING=OFF \
-			-DBUILD_DOCS=OFF \
-			-DINSTALL_MANPAGES=OFF \
-			-DINSTALL_PKGCONFIG_MODULES=OFF \
-			-DINSTALL_CMAKE_CONFIG_MODULE=OFF \
-			-DWITH_OGG=OFF \
-			-DBUILD_SHARED_LIBS=OFF \
-			-DENABLE_MULTITHREADING=ON \
-			-DCMAKE_INSTALL_PREFIX=${PREFIX} && \
-		cmake --build . --config Release && \
-		cmake --build . --target install
-	fi
-}
-
 
 function install_libsndfile() {
 	SRC=${THIRDPARTY}/libsndfile
@@ -114,43 +84,9 @@ function install_libsndfile() {
 }
 
 
-function install_rubberband() {
-	SRC=${THIRDPARTY}/rubberband
-	if [ ! -f ${THIRDPARTY}/install/lib/librubberband.a ]; then
-		rm -rf ${THIRDPARTY}/rubberband && \
-		mkdir -p ${THIRDPARTY} && \
-		git clone --depth=1 https://github.com/breakfastquay/rubberband.git ${THIRDPARTY}/rubberband && \
-		cd ${SRC} && \
-		make -f otherbuilds/Makefile.macos && \
-		cp lib/librubberband.a ${PREFIX}/lib && \
-		cp -rf rubberband ${PREFIX}/include/
-	fi
-}
-
-function install_libsamplerate() {
-	SRC=${THIRDPARTY}/libsamplerate
-	BUILD=${THIRDPARTY}/libsamplerate/build
-	if [ ! -f ${THIRDPARTY}/install/lib/libsamplerate.a ]; then
-		rm -rf ${THIRDPARTY}/libsamplerate && \
-		mkdir -p ${THIRDPARTY} && \
-		git clone --depth=1 https://github.com/libsndfile/libsamplerate.git ${THIRDPARTY}/libsamplerate && \
-		mkdir -p ${BUILD} && \
-		cd ${BUILD} && \
-		cmake .. \
-			-DCMAKE_VERBOSE_MAKEFILE=ON \
-			-DBUILD_TESTING=OFF \
-			-DCMAKE_INSTALL_PREFIX=${PREFIX} && \
-		cmake --build . --config Release && \
-		cmake --build . --target install
-	fi
-}
-
-
 setup
 install_faust
 install_libfaust
 install_libsndfile
-install_rubberband
-install_libsamplerate
 # install_pd
 
